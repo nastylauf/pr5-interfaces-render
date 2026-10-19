@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Employees API
+  version: 1.0.0
+  description: REST API для просмотра и управления сотрудниками.
+servers:
+  - url: https://pr5-interfaces-render.onrender.com
+    description: Production (Render)
+  - url: http://localhost:3000
+    description: Локальный сервер
+paths:
+  /employees:
+    get:
+      summary: Получить список сотрудников
+      responses:
+        "200":
+          description: Список сотрудников
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+    post:
+      summary: Добавить сотрудника
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewEmployee"
+      responses:
+        "201":
+          description: Сотрудник создан
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          description: Не заполнены обязательные поля
+  /employees/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Получить сотрудника по ID
+      responses:
+        "200":
+          description: Данные сотрудника
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: Сотрудник не найден
+    put:
+      summary: Обновить данные сотрудника
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewEmployee"
+      responses:
+        "200":
+          description: Сотрудник обновлён
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: Сотрудник не найден
+    delete:
+      summary: Удалить сотрудника
+      responses:
+        "200":
+          description: Удалённый сотрудник
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "404":
+          description: Сотрудник не найден
+components:
+  schemas:
+    NewEmployee:
+      type: object
+      required:
+        - name
+        - position
+      properties:
+        name:
+          type: string
+        position:
+          type: string
+        department:
+          type: string
+        salary:
+          type: number
+    Employee:
+      allOf:
+        - $ref: "#/components/schemas/NewEmployee"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+            department:
+              type: string
+            salary:
+              type: number

@@ -1,0 +1,24 @@
+{
+  "name": "practice5-6-employees-api",
+  "version": "1.0.0",
+  "description": "REST API сотрудников (Практика 5) + OpenAPI / Swagger / ReDoc (Практика 6)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "redoc-express": "^2.1.0",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
